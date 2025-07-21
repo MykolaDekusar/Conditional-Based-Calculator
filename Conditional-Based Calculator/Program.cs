@@ -13,53 +13,45 @@
 */
 
 
-int firstNumber;
-int secondNumber;
-char aOperator;
+int firstNumber, secondNumber;
+char operation;
 float result = 0f;
 
-Console.WriteLine("Enter the first number\n");
-while(!int.TryParse(Console.ReadLine(), out firstNumber))
-    Console.WriteLine("\nEnter a valid first number\n");
+Console.WriteLine("Enter the first number:");
+while (!int.TryParse(Console.ReadLine(), out firstNumber))
+    Console.WriteLine("Please enter a valid integer.");
 
-Console.WriteLine("\nEnter the second number\n");
+Console.WriteLine("Enter the second number:");
 while (!int.TryParse(Console.ReadLine(), out secondNumber))
-    Console.WriteLine("Enter a valid second number");
+    Console.WriteLine("Please enter a valid integer.");
 
-Console.WriteLine("\nEnter an operator between +, -, *, / \n");
-
-while (!char.TryParse(Console.ReadLine(), out aOperator))
-        Console.WriteLine("\nEnter a valid char\n");
-
-if (aOperator != '*' && aOperator != '+' && aOperator != '/' && aOperator != '-')
+do
 {
-    Console.WriteLine("\nEnter a valid operator\n");
-}
-else
+    Console.WriteLine("Enter an operator (+, -, *, /):");
+} while (!char.TryParse(Console.ReadLine(), out operation) ||
+         (operation != '+' && operation != '-' && operation != '*' && operation != '/'));
+
+switch (operation)
 {
-    switch (aOperator)
-    {
-        case '*':
-            result = firstNumber * secondNumber;
-            Console.WriteLine("\n" + result);
-            break;
-        case '-':
-            result = firstNumber - secondNumber;
-            Console.WriteLine("\n" + result);
-            break;
-        case '+':
-            result = firstNumber + secondNumber;
-            Console.WriteLine("\n" + result);
-            break;
-        case '/':
-            if(secondNumber == 0)
-            {
-                Console.WriteLine("\nError: Division by zero is not allowed.");
-                break;
-            }
-            result = firstNumber / secondNumber;
-            Console.WriteLine("\n" + Math.Round(result, 2));
-            break;
-    }
+    case '+':
+        result = firstNumber + secondNumber;
+        break;
+    case '-':
+        result = firstNumber - secondNumber;
+        break;
+    case '*':
+        result = firstNumber * secondNumber;
+        break;
+    case '/':
+        if (secondNumber == 0)
+        {
+            Console.WriteLine("Error: Division by zero is not allowed.");
+            return;
+        }
+        result = (float)firstNumber / secondNumber;
+        result = (float)Math.Round(result, 2);
+        break;
 }
+
+Console.WriteLine($"\nResult: {result}");
 Console.ReadKey();
